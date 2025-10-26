@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-require('dotenv').config();
+const config = require('./config');
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/notes-keeper';
+const MONGODB_URI = config.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
@@ -63,7 +63,7 @@ app.use('*', (req, res) => {
 });
 
 // Start Server
-const PORT = process.env.PORT || 5000;
+const PORT = config.PORT;
 app.listen(PORT, () => {
   console.log(`🌟 Server is running on port ${PORT}`);
   console.log(`🔗 Access the API at: http://localhost:${PORT}`);
